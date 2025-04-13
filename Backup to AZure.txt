@@ -1,0 +1,20 @@
+--- Using storage account identity and Access Key
+
+
+USE [master]
+GO
+ 
+CREATE CREDENTIAL [DBBackupCred] 
+WITH IDENTITY = 'mantestaz'  -- Storage Account Name
+,SECRET = 'xyx35HWTOnkDpiHkNWayz2Gsw6Figyxyx=='; -- Access key
+GO
+
+
+GO
+ 
+BACKUP DATABASE [ManTest]  
+ TO  URL = N'https://mantestaz.blob.core.windows.net/sqlbackups/mantest.bak'
+     WITH CREDENTIAL = 'DBBackupCred'  
+    ,COMPRESSION  
+    ,STATS = 5;  
+GO
